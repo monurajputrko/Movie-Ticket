@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { MainCarouselData } from ".././movies";
-import { useNavigate } from "react-router-dom";
 export const MainCarousel = () => {
   const items = MainCarouselData.map((item) => (
     <img
@@ -16,18 +15,20 @@ export const MainCarousel = () => {
   return (
     <div
       style={{
-        zIndex: "0"
+        zIndex: "0",
       }}
     >
-      {/* <AliceCarousel
+      <AliceCarousel
         autoHeight
+        autoWidth
         items={items}
         disableButtonsControls
+        disableDotsControls
         autoPlay
         autoPlayInterval={1000}
         infinite
-      /> */}
-      <AliceCarousel
+      />
+      {/* <AliceCarousel
         autoHeight
         items={items}
         autoWidth
@@ -36,7 +37,7 @@ export const MainCarousel = () => {
         autoPlay
         autoPlayInterval={1000}
         infinite
-      />
+      /> */}
     </div>
   );
 };

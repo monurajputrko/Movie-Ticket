@@ -1,0 +1,30 @@
+.details{
+    border: "2px solid #0AEAF1",
+}
+#div1 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 80vw;
+}
+
+#div2 {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    justify-items: center;
+    width: 70%;
+    margin-bottom: 2%;
+}
+
+/* @media (min-width: 768px) {
+
+    #div1 {
+        width: 100vw;
+    }
+    #div2 {
+        width: 100%;
+        grid-template-columns: repeat(30, 1fr);
+        margin: 10%;
+    }
+} */

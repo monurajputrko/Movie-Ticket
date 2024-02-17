@@ -1,25 +1,63 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import Contextpage from '../Contextpage';
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, Link } from "react-router-dom";
+import Contextpage from "../Contextpage";
 import { HiChevronLeft } from "react-icons/hi";
-import noimage from '../assets/images/movies.jpg'
+import noimage from "../assets/images/movies.jpg";
 import { FaPlay } from "react-icons/fa";
 import { IoTicketSharp } from "react-icons/io5";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import slugify from 'react-slugify';
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import slugify from "react-slugify";
+import "../components/details.css"
 export const Detail = () => {
   const APIKEY = "1cf50e6248dc270629e802686245c2c8";
 
   const { loader, setLoader } = useContext(Contextpage);
 
-  const { id } = useParams()
+  const { id } = useParams();
 
   const [moviedet, setMoviedet] = useState([]);
   const [castdata, setCastdata] = useState([]);
   const [moviegenres, setMoviegenres] = useState([]);
   const [video, setVideo] = useState([]);
+  const [Booking, setBooking] = useState(true);
+  const [arr, setArr] = useState(Array(160).fill(null));
+  const [Tickets, setTickets] = useState(0);
+  const [TicketsBool, setTicketsBool] = useState(false);
+ 
+  const [count, setCount] = useState([...arr]);
+  const [turn, setTurn] = useState(true);
+
+  var arr1 = [...count];
+
+ useEffect(() => {
+   const randomArray = Array.from(
+     { length: 30 },
+     () => Math.floor(Math.random() * 100) + 1
+   );
+    setArr(arr.map((e, i) => (randomArray.includes(i) ? "#F82032" : null))); 
+    setCount(arr.map((e, i) => (randomArray.includes(i) ? "#F82032" : null))); 
+ }, []);
+  
+
+  const handleClick = (i) => {
+   
+    if (Tickets > 0 && arr[i] === null) { 
+       if (arr[i] === null) {
+         arr[i] = "#7CFF01";
+         setTickets(Tickets - 1);
+      }
+    }else if (TicketsBool) {
+     if (arr[i] == "#7CFF01") {
+       arr[i] = null;
+       setTickets(Tickets + 1);
+     } 
+    }
+    console.log(arr[i])
+    
+    setCount(arr);
+    setTurn(!turn);
+  };
 
   const fetchMovie = async () => {
     const data = await fetch(
@@ -39,7 +77,7 @@ export const Detail = () => {
     const castdetail = await castdata.json();
     setCastdata(castdetail.cast);
     setLoader(false);
-  }
+  };
 
   const fetchVideo = async () => {
     const data = await fetch(
@@ -48,14 +86,13 @@ export const Detail = () => {
     const videodata = await data.json();
     setVideo(videodata.results);
     // console.log(videodata.results);
-  }
+  };
   useEffect(() => {
     fetchMovie();
     fetchCast();
     fetchVideo();
   }, []);
 
-  
   return (
     <>
       {loader ? (
@@ -175,17 +212,137 @@ export const Detail = () => {
           </div>
 
           {/* watch movie */}
-          <div className="flex justify-center items-center mb-10 gap-5 flex-wrap">
-            <Link
-              to={`/player/${id}/${slugify(moviedet.title)}`}
-              className="flex border-2 border-green-600 bg-green-600/40 p-3 items-center justify-center gap-2 text-xl font-semibold rounded-full text-white"
-            >
-              <IoTicketSharp />
-              Book Tickets
-            </Link>
-          </div>
+          {Booking ? (
+            <div className="flex justify-center items-center mb-10 gap-5 flex-wrap">
+              <button
+                onClick={() => {
+                  setBooking(!Booking);
+                  // setTicketsBool(!TicketsBool);
+                }}
+                className="flex border-2 border-green-600 bg-green-600/40 p-3 items-center justify-center gap-2 text-xl font-semibold rounded-full text-white"
+              >
+                <IoTicketSharp />
+                Book Tickets
+              </button>
+            </div>
+          ) : (
+            <div>
+              <div
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: "5%",
+                }}
+              >
+                <select
+                  onChange={(e) => {
+                    setTickets(parseInt(e.target.value));
+                    setTicketsBool(true);
+                  }}
+                  style={{ width: "70%" }}
+                >
+                  <option value="">Book Tickets</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                </select>
+              </div>
+            </div>
+          )}
+
+          {TicketsBool ? (
+            <div>
+              {console.log("Ticket = ", Tickets)}
+              <div id="div1">
+                <div id="div2">
+                  {count.map((c, i) => (
+                    <div
+                      style={{
+                        border: "2px solid #0AEAF1",
+                        width: "30px",
+                        height: "30px",
+                        margin: "5px",
+                        color: "#0AEAF1",
+                        backgroundColor: c,
+                      }}
+                      id="div3"
+                      onClick={() => {
+                        handleClick(i);
+                      }}
+                      key={i}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+              <img
+                style={{
+                  marginLeft: "40%",
+                  marginRight: "40%",
+                  marginBottom: "5%",
+                }}
+                src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjr5-BKPpN8CUa3DslnwnDNqnE-A8-2I3pT-iNMttBdgTQd_eRLC5DElMPWvrKDJw-ke-2kUEGKpGIMTdlI9uq7CtgipB5RY50WyADFN6hsk46lprI71GhWqszqZ3G4MVdnql5eOsW6esxZNWfSzkjJ1u9OkPdp329y47BkbM0t2l29_mZ_2FymMmdq_XUh/s320/tv.png"
+                alt="tv"
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </>
       )}
     </>
   );
+};
+
+{
+  /* <div>
+ <div id="div1">
+                <div id="div2">
+                  {count.map((c, i) => (
+                    <div
+                      style={{
+                        border: "2px solid #0AEAF1",
+                        width: "30px",
+                        height: "30px",
+                        margin: "5px",
+                        color: "#0AEAF1",
+                        backgroundColor: c,
+                      }}
+                      id="div3"
+                      onClick={() => handleClick(i)}
+                      key={i}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+              <img
+                style={{
+                  marginLeft: "40%",
+                  marginRight: "40%",
+                  marginBottom: "5%",
+                }}
+                src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjr5-BKPpN8CUa3DslnwnDNqnE-A8-2I3pT-iNMttBdgTQd_eRLC5DElMPWvrKDJw-ke-2kUEGKpGIMTdlI9uq7CtgipB5RY50WyADFN6hsk46lprI71GhWqszqZ3G4MVdnql5eOsW6esxZNWfSzkjJ1u9OkPdp329y47BkbM0t2l29_mZ_2FymMmdq_XUh/s320/tv.png"
+                alt="tv"
+              /> 
+            </div>
+            */
 }
+
+             

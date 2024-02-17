@@ -15,31 +15,37 @@ function Navbar() {
 
     // console.log(user)
     const Navdata = [
-        {
-            id: 1,
-            headername: "Genres",
-            Name: "Genres",
-            link : "/"
-        },
-        {
-            id: 2,
-            headername: "Trending Movies",
-            Name: "Trending",
-            link:"/trending"
-        },
-        {
-            id: 3,
-            headername: "Upcoming Movies",
-            Name: "Upcoming",
-            link:"/upcoming"
-        },
-        {
-            id: 4,
-            headername: "Favorite Movies",
-            Name: "Favorites",
-            link:"/favorite"
-        }
-    ]
+      {
+        id: 1,
+        headername: "Genres",
+        Name: "Genres",
+        link: "/",
+      },
+      {
+        id: 2,
+        headername: "Trending Movies",
+        Name: "Trending",
+        link: "/trending",
+      },
+      {
+        id: 3,
+        headername: "Upcoming Movies",
+        Name: "Upcoming",
+        link: "/upcoming",
+      },
+      {
+        id: 4,
+        headername: "Favorite Movies",
+        Name: "Favorites",
+        link: "/favorite",
+      },
+      {
+        id: 5,
+        headername: "Booked Ticket",
+        Name: "Booked Ticket",
+        link: "/player/:id",
+      },
+    ];
 
     return (
         <>
@@ -56,7 +62,7 @@ function Navbar() {
                 >
                     <Link to="/" className="logo flex flex-col justify-center items-center m-7 gap-2" onClick={() => setActivemobile(!activemobile)}>
                         <img src={logo} alt="logo" className="w-24" />
-                        <h1 className="text-gray-400/70 font-bold text-2xl text-center">BlueBird Movies</h1>
+                        <h1 className="text-gray-400/70 font-bold text-2xl text-center">Click Movies</h1>
                     </Link>
                 </motion.div>
 
