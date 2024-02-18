@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Contextpage from "../Contextpage";
 import { HiChevronLeft } from "react-icons/hi";
 import noimage from "../assets/images/movies.jpg";
@@ -11,7 +11,7 @@ import slugify from "react-slugify";
 import "../components/details.css"
 export const Detail = () => {
   const APIKEY = "1cf50e6248dc270629e802686245c2c8";
-
+  const navigate = useNavigate();
   const { loader, setLoader } = useContext(Contextpage);
 
   const { id } = useParams();
@@ -24,6 +24,8 @@ export const Detail = () => {
   const [arr, setArr] = useState(Array(160).fill(null));
   const [Tickets, setTickets] = useState(0);
   const [TicketsBool, setTicketsBool] = useState(false);
+  const [BookedTickets, setBookedTickets] = useState(0);
+  const [randomNumber, setRandom] = useState(Math.floor(Math.random() * 5) + 1);
  
   const [count, setCount] = useState([...arr]);
   const [turn, setTurn] = useState(true);
@@ -39,17 +41,56 @@ export const Detail = () => {
     setCount(arr.map((e, i) => (randomArray.includes(i) ? "#F82032" : null))); 
  }, []);
   
+  // const paymemt = (moviedet) => {
+  //   const existingData = localStorage.getItem("booked_movies");
+  //   let dataArray = existingData ? JSON.parse(existingData) : [];
+    
+  //   dataArray.push(moviedet);
+
+  //   const updatedData = JSON.stringify(dataArray);
+
+  //   localStorage.setItem("booked_movies", updatedData);
+
+  //   if (BookedTickets !== 0) {
+  //     alert("Payment Successful");
+  //     navigate("/");
+  //   } else {
+  //     alert("Please Select Seats for Payment");
+  //   }
+  // };
+  // const randomNumber = ;
+  const payment = (moviedet) => {
+    const existingData = localStorage.getItem("booked_movies");
+    let dataArray = existingData ? JSON.parse(existingData) : [];
+
+    moviedet.BookedTickets = BookedTickets;
+
+    dataArray.push(moviedet);
+
+    const updatedData = JSON.stringify(dataArray);
+
+    localStorage.setItem("booked_movies", updatedData);
+
+    if (BookedTickets !== 0) {
+      alert("Payment Successful");
+      navigate("/booked");
+    } else {
+      alert("Please Select Seats for Payment");
+    }
+  };
 
   const handleClick = (i) => {
    
     if (Tickets > 0 && arr[i] === null) { 
        if (arr[i] === null) {
          arr[i] = "#7CFF01";
+         setBookedTickets(BookedTickets + 1);
          setTickets(Tickets - 1);
       }
     }else if (TicketsBool) {
      if (arr[i] == "#7CFF01") {
        arr[i] = null;
+       setBookedTickets(BookedTickets - 1);
        setTickets(Tickets + 1);
      } 
     }
@@ -232,7 +273,7 @@ export const Detail = () => {
                   alignItems: "center",
                   display: "flex",
                   justifyContent: "center",
-                  marginBottom: "5%",
+                  marginBottom: "2%",
                 }}
               >
                 <select
@@ -270,7 +311,61 @@ export const Detail = () => {
 
           {TicketsBool ? (
             <div>
-              {console.log("Ticket = ", Tickets)}
+              {randomNumber === 1 && (
+                <h1
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    marginBottom: "2%",
+                  }}
+                >
+                  Tickets Price :- ₹199
+                </h1>
+              )}
+              {randomNumber === 2 && (
+                <h1
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    marginBottom: "2%",
+                  }}
+                >
+                  Tickets Price :- ₹299
+                </h1>
+              )}
+              {randomNumber === 3 && (
+                <h1
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    marginBottom: "2%",
+                  }}
+                >
+                  Tickets Price :- ₹399
+                </h1>
+              )}
+              {randomNumber === 4 && (
+                <h1
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    marginBottom: "2%",
+                  }}
+                >
+                  Tickets Price :- ₹499
+                </h1>
+              )}
+              {randomNumber === 5 && (
+                <h1
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    marginBottom: "2%",
+                  }}
+                >
+                  Tickets Price :- ₹599
+                </h1>
+              )}
               <div id="div1">
                 <div id="div2">
                   {count.map((c, i) => (
@@ -301,6 +396,23 @@ export const Detail = () => {
                 src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjr5-BKPpN8CUa3DslnwnDNqnE-A8-2I3pT-iNMttBdgTQd_eRLC5DElMPWvrKDJw-ke-2kUEGKpGIMTdlI9uq7CtgipB5RY50WyADFN6hsk46lprI71GhWqszqZ3G4MVdnql5eOsW6esxZNWfSzkjJ1u9OkPdp329y47BkbM0t2l29_mZ_2FymMmdq_XUh/s320/tv.png"
                 alt="tv"
               />
+              {BookedTickets !== 0 && (
+                <div className="flex justify-center items-center mb-10 gap-5 flex-wrap">
+                  <button
+                    onClick={() => {
+                      payment(moviedet);
+                    }}
+                    className="flex border-2 border-green-600 bg-green-600/40 p-3 items-center justify-center gap-2 text-xl font-semibold rounded-full text-white"
+                  >
+                    <IoTicketSharp />
+                    {randomNumber === 1 && `Pay ₹ ${BookedTickets * 199} Now`}
+                    {randomNumber === 2 && `Pay ₹ ${BookedTickets * 299} Now`}
+                    {randomNumber === 3 && `Pay ₹ ${BookedTickets * 399} Now`}
+                    {randomNumber === 4 && `Pay ₹ ${BookedTickets * 499} Now`}
+                    {randomNumber === 5 && `Pay ₹ ${BookedTickets * 599} Now`}
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             ""

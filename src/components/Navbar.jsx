@@ -43,7 +43,7 @@ function Navbar() {
         id: 5,
         headername: "Booked Ticket",
         Name: "Booked Ticket",
-        link: "/player/:id",
+        link: "/booked",
       },
     ];
 
