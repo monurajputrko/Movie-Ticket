@@ -38,7 +38,6 @@ Firstly, download the entire website code and extract the ZIP file to a folder o
 
 ## Step 2: Obtain the TMDB Movies API Key and Firebase Configuration
 
-Before starting the website, you will need to obtain the TMDB Movies API key and Firebase configuration. Follow these steps to obtain them and add them to your `.env` file.
 
 ### ▶️ Get TMDB API Key 
 
