@@ -14,6 +14,7 @@ Book My Movie is a React-based movie website that allows users to search for mov
 - Upcoming movies: displays a section for upcoming movies
 - Movie Details: users can view detailed information about each movie
 - Bookmark Movies: users can bookmark their favorite movies for later viewing
+- Book Ticket of Your Favorite Movies
 - Google Authentication: users can sign in using their Google account
 
 <hr/>
@@ -72,7 +73,7 @@ Open your code editor (such as VS Code) and navigate to the project directory. T
 ```bash
 npm run dev
 ```
-This will start the application. Open a web browser and navigate to http://localhost:3000 to access the website.
+This will start the application. Open a web browser and navigate to Shown Port to access the website.
 
 Note: Ensure that you have carefully added the TMDB API key and Firebase authentication configuration to your .env file. If the .env file is not working, add all the API keys and configuration manually.
 
@@ -80,14 +81,10 @@ Note: Ensure that you have carefully added the TMDB API key and Firebase authent
 
 # 🍿 Demo 
 
-- Check out our live demo at https://bluebirdmovies.netlify.app/ 
+- Check out our live demo at [https://bluebirdmovies.netlify.app/](https://movie-ticket-roan.vercel.app/) 
  
+https://github.com/monurajputrko/Movie-Ticket
 
-
-https://github.com/Premjeet-yadav/Movie_app
-
-
-  
 
 # 😍 Contribution
 Contributions are always welcome, open a **Pull Request** and help us improve our project.
